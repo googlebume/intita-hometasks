@@ -7,7 +7,8 @@ from utils.handlers.user.service import UserService
 from utils.type_guards.float_guard import safe_input_float
 from utils.type_guards.int_guard import safe_input_int
 from utils.type_guards.str_guard import safe_input_str
-
+ф =12
+print(ф)
 def main():
     name = safe_input_str("Введіть ваше ім'я: ")
     friends_count = safe_input_int("Скільки друзів ви плануєте запросити? ", min_value=0)
