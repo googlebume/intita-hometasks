@@ -33,7 +33,11 @@ class _State extends State<MyHomePage> {
       displayText.add(number.toString());
     });
   }
-
+  void _onClear(){
+    setState(() {
+      displayText = [];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +102,8 @@ class _State extends State<MyHomePage> {
                     ElevatedButton(onPressed: () => _onNumberPressed(9), child: Text('9')),
                   ],
                 ),
+                SizedBox(height: 10),
+                ElevatedButton(onPressed: () => _onClear(), child: Text('Clear')),
               ],
             ),
           ],
