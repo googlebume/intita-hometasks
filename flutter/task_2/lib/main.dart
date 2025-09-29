@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:task_2/secondScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,23 +20,27 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _State();
+    return _MyHomePageState();
   }
 }
 
-class _State extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> {
   var currentColor = 0;
   var colors = [Colors.orange, Colors.blueAccent, Colors.green, Colors.amber];
   var displayText = [];
+  String? inputFromSecondScreen;
 
   void _onNumberPressed(int number) {
     setState(() {
       displayText.add(number.toString());
     });
   }
-  void _onClear(){
+
+  void _onClear() {
     setState(() {
-      displayText = [];
+      if (displayText.isNotEmpty) {
+        displayText.removeLast();
+      }
     });
   }
 
@@ -52,9 +57,9 @@ class _State extends State<MyHomePage> {
               width: 300,
               height: 200,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CupertinoButton(
-              child: Text('Change Color'),
+              child: const Text('Change Color'),
               onPressed: () {
                 setState(() {
                   if (currentColor >= colors.length - 1) {
@@ -65,45 +70,86 @@ class _State extends State<MyHomePage> {
                 });
               },
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Text(displayText.toString()),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+
+
             Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(onPressed: () => _onNumberPressed(1), child: Text('1')),
-                    SizedBox(width: 10),
-                    ElevatedButton(onPressed: () => _onNumberPressed(2), child: Text('2')),
-                    SizedBox(width: 10),
-                    ElevatedButton(onPressed: () => _onNumberPressed(3), child: Text('3')),
+                    ElevatedButton(
+                        onPressed: () => _onNumberPressed(1),
+                        child: const Text('1')),
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                        onPressed: () => _onNumberPressed(2),
+                        child: const Text('2')),
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                        onPressed: () => _onNumberPressed(3),
+                        child: const Text('3')),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(onPressed: () => _onNumberPressed(4), child: Text('4')),
-                    SizedBox(width: 10),
-                    ElevatedButton(onPressed: () => _onNumberPressed(5), child: Text('5')),
-                    SizedBox(width: 10),
-                    ElevatedButton(onPressed: () => _onNumberPressed(6), child: Text('6')),
+                    ElevatedButton(
+                        onPressed: () => _onNumberPressed(4),
+                        child: const Text('4')),
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                        onPressed: () => _onNumberPressed(5),
+                        child: const Text('5')),
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                        onPressed: () => _onNumberPressed(6),
+                        child: const Text('6')),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(onPressed: () => _onNumberPressed(7), child: Text('7')),
-                    SizedBox(width: 10),
-                    ElevatedButton(onPressed: () => _onNumberPressed(8), child: Text('8')),
-                    SizedBox(width: 10),
-                    ElevatedButton(onPressed: () => _onNumberPressed(9), child: Text('9')),
+                    ElevatedButton(
+                        onPressed: () => _onNumberPressed(7),
+                        child: const Text('7')),
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                        onPressed: () => _onNumberPressed(8),
+                        child: const Text('8')),
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                        onPressed: () => _onNumberPressed(9),
+                        child: const Text('9')),
                   ],
                 ),
-                SizedBox(height: 10),
-                ElevatedButton(onPressed: () => _onClear(), child: Text('Clear')),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                    onPressed: () => _onClear(), child: const Text('Clear')),
+                const SizedBox(height: 30),
+
+                ElevatedButton(
+                  onPressed: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SecondScreen()),
+                    );
+                    if (result != null) {
+                      setState(() {
+                        inputFromSecondScreen = result as String;
+                      });
+                    }
+                  },
+                  child: const Text("Go to Second Screen"),
+                ),
+
+
+                Text(inputFromSecondScreen ?? "Empty"),
               ],
             ),
           ],
