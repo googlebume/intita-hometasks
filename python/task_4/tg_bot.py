@@ -1,6 +1,6 @@
 #pip install python-telegram-bot
 
-TOKEN = '7532474605:AAG2MGWN7ZZ4bzw679Vhtk5nXJ85c2QvU28'
+TOKEN = 'ADD_YOUR_TOKEN'
 
 COMMANDS = {
     "/add_task": {
