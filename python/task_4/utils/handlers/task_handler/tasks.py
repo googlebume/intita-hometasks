@@ -1,10 +1,13 @@
 from telegram import Update
 from telegram.ext import ContextTypes
+from ..database.base_database_handler import BaseDatabase
 
 class BaseTasksHandler:
-    def __init__(self, crypto, tasks=None):
+    def __init__(self, crypto, fileHandler: BaseDatabase, tasks=None):
         self.tasks = tasks or []
         self.crypto = crypto
+        self.fileHandler = fileHandler
+
 
     def check_task_id(self, idx: int) -> str:
 
@@ -31,6 +34,7 @@ class BaseTasksHandler:
                 "task": task_text
             }
             self.tasks.append(task)
+            self.fileHandler.write_file(str(self.tasks))
             
             await update.message.reply_text(f"Завдання додано: {task_text}")
             return task
