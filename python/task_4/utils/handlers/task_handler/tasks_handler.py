@@ -1,6 +1,8 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 from tasks_service import TaskService
+from ...type_guards.str_guard import validate_task_text
+from ...type_guards.int_guard import validate_task_number
 
 
 class BaseTasksHandler:

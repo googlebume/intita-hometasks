@@ -8,3 +8,7 @@ def safe_input_int(prompt: str, min_value: int = None) -> int:
             return value
         except ValueError:
             print("Введіть ціле число!")
+
+def validate_task_number(number: int):
+    if not isinstance(number, int) or number < 1:
+        raise ValueError("Номер таски має бути більше 0")
