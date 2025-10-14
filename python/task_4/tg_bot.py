@@ -1,15 +1,15 @@
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
-from utils.handlers.task_handler.tasks import BaseTasksHandler
+from utils.handlers.task_handler.tasks_handler import BaseTasksHandler
 from utils.handlers.crypto.crypto import Crypto
 from utils.handlers.support.support import Support
-from utils.handlers.database.base_database_handler import BaseDatabase
+from utils.handlers.file.base_file_handler import BaseFileHandler
 
 from env import TOKEN, COMMANDS
 
-from utils.handlers.database.base_database_handler import BaseDatabase
+from utils.handlers.file.base_file_handler import BaseFileHandler
 
 crypto = Crypto()
-baseDatabaseHandler = BaseDatabase()
+baseDatabaseHandler = BaseFileHandler()
 task_handler = BaseTasksHandler(tasks=[], crypto=crypto, fileHandler = baseDatabaseHandler)
 support = Support(commands=COMMANDS)
 

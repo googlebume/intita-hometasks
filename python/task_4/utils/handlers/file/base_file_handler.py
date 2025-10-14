@@ -2,7 +2,7 @@ import os.path
 from pathlib import Path
 
 
-class BaseDatabase():
+class BaseFileHandler():
     def __init__(self, paths = None, exists = None):
         current_file = Path(__file__).resolve()
         self.project_root = str(current_file.parents[3]) + "\database\database.json"
