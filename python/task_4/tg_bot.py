@@ -1,3 +1,5 @@
+#pip install python-telegram-bot
+
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 from utils.handlers.task_handler.tasks_handler import BaseTasksHandler
 from utils.handlers.crypto.crypto import Crypto
@@ -27,3 +29,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+=======
+main()
