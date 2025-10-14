@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_2/classes/calculator_block.dart';
 import 'package:task_2/secondScreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +14,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Flutter Demo', home: MyHomePage());
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: BlocProvider(
+        create: (context) => CalculatorBloc(),
+        child: MyHomePage(),
+      ),
+    );
   }
 }
 
@@ -27,22 +36,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var currentColor = 0;
   var colors = [Colors.orange, Colors.blueAccent, Colors.green, Colors.amber];
-  var displayText = [];
   String? inputFromSecondScreen;
-
-  void _onNumberPressed(int number) {
-    setState(() {
-      displayText.add(number.toString());
-    });
-  }
-
-  void _onClear() {
-    setState(() {
-      if (displayText.isNotEmpty) {
-        displayText.removeLast();
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,25 +65,33 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             const SizedBox(height: 30),
-            Text(displayText.toString()),
+            BlocBuilder<CalculatorBloc, CalculatorState>(
+              builder: (context, state) {
+                return Text(state.displayText.toString());
+              },
+            ),
             const SizedBox(height: 20),
-
-
             Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                        onPressed: () => _onNumberPressed(1),
+                        onPressed: () => context
+                            .read<CalculatorBloc>()
+                            .add(NumberPressedEvent(1)),
                         child: const Text('1')),
                     const SizedBox(width: 10),
                     ElevatedButton(
-                        onPressed: () => _onNumberPressed(2),
+                        onPressed: () => context
+                            .read<CalculatorBloc>()
+                            .add(NumberPressedEvent(2)),
                         child: const Text('2')),
                     const SizedBox(width: 10),
                     ElevatedButton(
-                        onPressed: () => _onNumberPressed(3),
+                        onPressed: () => context
+                            .read<CalculatorBloc>()
+                            .add(NumberPressedEvent(3)),
                         child: const Text('3')),
                   ],
                 ),
@@ -98,15 +100,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                        onPressed: () => _onNumberPressed(4),
+                        onPressed: () => context
+                            .read<CalculatorBloc>()
+                            .add(NumberPressedEvent(4)),
                         child: const Text('4')),
                     const SizedBox(width: 10),
                     ElevatedButton(
-                        onPressed: () => _onNumberPressed(5),
+                        onPressed: () => context
+                            .read<CalculatorBloc>()
+                            .add(NumberPressedEvent(5)),
                         child: const Text('5')),
                     const SizedBox(width: 10),
                     ElevatedButton(
-                        onPressed: () => _onNumberPressed(6),
+                        onPressed: () => context
+                            .read<CalculatorBloc>()
+                            .add(NumberPressedEvent(6)),
                         child: const Text('6')),
                   ],
                 ),
@@ -115,23 +123,31 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                        onPressed: () => _onNumberPressed(7),
+                        onPressed: () => context
+                            .read<CalculatorBloc>()
+                            .add(NumberPressedEvent(7)),
                         child: const Text('7')),
                     const SizedBox(width: 10),
                     ElevatedButton(
-                        onPressed: () => _onNumberPressed(8),
+                        onPressed: () => context
+                            .read<CalculatorBloc>()
+                            .add(NumberPressedEvent(8)),
                         child: const Text('8')),
                     const SizedBox(width: 10),
                     ElevatedButton(
-                        onPressed: () => _onNumberPressed(9),
+                        onPressed: () => context
+                            .read<CalculatorBloc>()
+                            .add(NumberPressedEvent(9)),
                         child: const Text('9')),
                   ],
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
-                    onPressed: () => _onClear(), child: const Text('Clear')),
+                    onPressed: () => context
+                        .read<CalculatorBloc>()
+                        .add(ClearPressedEvent()),
+                    child: const Text('Clear')),
                 const SizedBox(height: 30),
-
                 ElevatedButton(
                   onPressed: () async {
                     final result = await Navigator.push(
@@ -147,8 +163,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   child: const Text("Go to Second Screen"),
                 ),
-
-
                 Text(inputFromSecondScreen ?? "Empty"),
               ],
             ),

@@ -1,37 +1,19 @@
 #pip install python-telegram-bot
 
-TOKEN = 'ADD_YOUR_TOKEN'
-
-COMMANDS = {
-    "/add_task": {
-        "command": "add_task",
-        "description": "Додати нове завдання"
-    },
-    "/print_all": {
-        "command": "print_all",
-        "description": "Вивести всі таски"
-    },
-    "/help": {
-        "command": "help",
-        "description": "Допомога з командами"
-    },
-    "/remove_by_id": {
-        "command": "remove_by_id",
-        "description": "Видалити таску за номером"
-    },
-    "/edit_task": {
-        "command": "edit_task",
-        "description": "Редагувати таску за номером"
-    },
-}
-
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
-from utils.handlers.task_handler.tasks import BaseTasksHandler
+from utils.handlers.task_handler.tasks_handler import BaseTasksHandler
 from utils.handlers.crypto.crypto import Crypto
 from utils.handlers.support.support import Support
+from utils.handlers.file.base_file_handler import BaseFileHandler
 
+from env import TOKEN, COMMANDS
+
+from utils.handlers.file.base_file_handler import BaseFileHandler
+
+from utils.handlers.task_handler.tasks_service import TaskService
 crypto = Crypto()
-task_handler = BaseTasksHandler(tasks=[], crypto=crypto)
+baseDatabaseHandler = BaseFileHandler()
+task_handler = BaseTasksHandler(TaskService(crypto=crypto, file_handler=BaseFileHandler()))
 support = Support(commands=COMMANDS)
 
 def main():
@@ -45,4 +27,7 @@ def main():
 
     app.run_polling()
 
+if __name__ == "__main__":
+    main()
+=======
 main()
