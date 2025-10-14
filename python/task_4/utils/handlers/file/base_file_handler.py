@@ -1,4 +1,5 @@
 import os.path
+import json
 from pathlib import Path
 
 
@@ -24,8 +25,11 @@ class BaseFileHandler():
             os.remove(self.project_root)
 
     def write_file(self, data):
-        with open(self.project_root, 'w') as file:
-            file.write(data)
+        with open(self.project_root, 'w', encoding='utf-8') as file:
+            json.dump(data, file, ensure_ascii=False, indent=4)
 
-
-
+    def read_file(self):
+        if not self.is_exists():
+            return []
+        with open(self.project_root, 'r', encoding='utf-8') as file:
+            return json.load(file)

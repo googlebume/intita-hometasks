@@ -9,7 +9,7 @@ class TaskService:
             raise ValueError(f"Таска '{text}' вже існує")
         task = {"id": self.crypto.gen_id(text), "task": text}
         self.tasks.append(task)
-        self.file_handler.write_file(str(self.tasks))
+        self.file_handler.write_file(self.tasks)
         return task
 
     def edit(self, index: int, new_text: str):
@@ -27,4 +27,7 @@ class TaskService:
         return self.tasks.pop(index)
 
     def list_all(self):
+        if self.tasks: return self.tasks
+
+        self.tasks = self.file_handler.read_file()
         return self.tasks
