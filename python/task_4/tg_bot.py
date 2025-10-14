@@ -11,9 +11,13 @@ from env import TOKEN, COMMANDS
 from utils.handlers.file.base_file_handler import BaseFileHandler
 
 from utils.handlers.task_handler.tasks_service import TaskService
-crypto = Crypto()
-baseDatabaseHandler = BaseFileHandler()
-task_handler = BaseTasksHandler(TaskService(crypto=crypto, file_handler=BaseFileHandler()))
+
+task_handler = BaseTasksHandler(
+    TaskService(
+        crypto=Crypto(), 
+        file_handler=BaseFileHandler()
+        )
+    )
 support = Support(commands=COMMANDS)
 
 def main():
