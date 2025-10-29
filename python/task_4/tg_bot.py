@@ -12,6 +12,8 @@ from utils.handlers.file.base_file_handler import BaseFileHandler
 
 from utils.handlers.task_handler.tasks_service import TaskService
 
+from utils.handlers.weather.base_weather_handler import BaseWeatherHandler
+
 task_handler = BaseTasksHandler(
     TaskService(
         crypto=Crypto(), 
@@ -19,6 +21,7 @@ task_handler = BaseTasksHandler(
         )
     )
 support = Support(commands=COMMANDS)
+base_weather_handler = BaseWeatherHandler()
 
 def main():
     app = Application.builder().token(TOKEN).build()
@@ -28,6 +31,7 @@ def main():
     app.add_handler(CommandHandler(COMMANDS["/remove_by_id"]["command"], task_handler.remove_task))
     app.add_handler(CommandHandler(COMMANDS["/edit_task"]["command"], task_handler.edit_task))
     app.add_handler(CommandHandler(COMMANDS["/help"]["command"], support.help_command))
+    app.add_handler(CommandHandler(COMMANDS["/watch_weather"]["command"], base_weather_handler.get_weather_in_city))
 
     app.run_polling()
 

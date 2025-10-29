@@ -21,4 +21,13 @@ COMMANDS = {
         "command": "edit_task",
         "description": "Редагувати таску за номером"
     },
+    "/watch_weather": {
+        "command": 'watch_weather',
+        "description": "Подивитися погоду в будь-якому місці"
+    }
 }
+
+def CITY_COORDS_API(city, country):
+    return f'https://api.api-ninjas.com/v1/geocoding?city={city}&country={country}'
+
+CITY_WEATHER_API = 'https://api.open-meteo.com/v1/forecast'
